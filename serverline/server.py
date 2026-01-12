@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
-from fastmcp import FastMCP, Context
+# from fastmcp import FastMCP, Context
+from mcp.server.fastmcp import FastMCP
 
 mcp = FastMCP("mcp-server")
 
