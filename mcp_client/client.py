@@ -88,11 +88,11 @@ class MCPClient:
     ) -> None:
         print(f"\n{section_name}:")
         print("-" * 20)
-        members = await list_method()
-        for member in members:
+        members = await list_method() # own
+        for member in members: #own
             print(member)
         try:
-            items = getattr(await list_method(), section_name.lower())
+            items = getattr(await list_method(), section_name.lower()) #lower optional
                             # if items := "items" in dir(members) else "tools")
             if items:
                 print(f"\n {section_name.upper()} ({len(items)}):")
@@ -104,7 +104,8 @@ class MCPClient:
                 # print(f"No {section_name.lower()} available.")
                 print(f"\n {section_name.upper()} (0): None available.")
         except Exception as e:  
-            print(f"Error retrieving {section_name.lower()}: {e}")
+            print(f"Error retrieving {section_name.lower()}: {e}") # you can change from lower to upper optional..
                                                    
                                                 #    if hasattr(item, "description")
                                                 #    else "No description")
+                                                
