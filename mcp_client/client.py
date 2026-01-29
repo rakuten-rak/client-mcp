@@ -5,6 +5,11 @@ from typing import Any, Awaitable, Callable, ClassVar, Self, Optional
 from mcp import ClientSession, StdioServerParameters
 from mcp.client.stdio import stdio_client
 
+from mcp_client import chat
+from mcp_client.handlers import OpenAiQueryHandler
+
+
+
 class MCPClient:
     """MCP Client to interact with MCP Server.
     
@@ -107,5 +112,13 @@ class MCPClient:
             print(f"Error retrieving {section_name.lower()}: {e}") # you can change from lower to upper optional..
                                                    
                                                 #    if hasattr(item, "description")
-                                                #    else "No description")
-                                                
+     
+                                               #    else "No description")
+    
+    async def start_chat_session(self) -> None:
+        """Start interactive chat session with MCP server integration using OpenAI."""
+        try:
+            handler = OpenAiQueryHandler(self.client_session)
+            await chat.run_chat(handler)
+        except RuntimeError as e:
+            print(f"Chat Session Error : {(str(e))}")

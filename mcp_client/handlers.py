@@ -13,7 +13,7 @@ class OpenAiQueryHandler:
     def __init__ (self,client_session: ClientSession):
         self.client_session = client_session
         if not (api_key := os.getenv("OPENAI_API_KEY")):
-            raise ValueError("Error: OPENAI_API_KEY environment variable not set")
+            raise ValueError(f"Error: OPENAI_API_KEY environment variable not set: {api_key}")
         
         self.openai_client = OpenAI(api_key=api_key)
         
@@ -57,6 +57,46 @@ class OpenAiQueryHandler:
                 result_parts.append(content)
                 
         return "Assistant : " + "\n".join(result_parts)
+    
+    async def _get_tools(self):
+        """Get MCP Tools formatted for OpenAI API"""
+        response = await self.client_session.list_tools()
+        return [
+            {
+                "type":"function",
+                "function":{
+                    "name":tool.name,
+                    "description":tool.description or "No Description",
+                    "parameters":getattr(tool,"inputSchema",{"type":"object","properties":{}},),
+                },
+            }
+            for tool in response.tools
+        ]
+        
+    async def _execute_tool_call(self,tool_call):
+        """Execute an MCP tool call and return formatted results."""
+        tool_name = tool_call.function.name
+        tool_args = json.loads(tool_call.function.arguments or "{}")
+        try:
+            result = await self.client_session.call_tool(tool_name,tool_args)
+            content = result.content[0].text if result.content else "No content data returned."
+            log = f"[Used {tool_name} ({tool_args})]"
+        except Exception as e:
+            content = f"Error executing tool {tool_name}: {str(e)}"
+            log = f"[{content}]"
+        
+        return {
+            "log":log,
+            "message":{
+                "role":"tool",
+                "tool_call_id":tool_call.id,
+                "content":content,
+            },
+            
+        }
+        
+        
+        
         
         
         
