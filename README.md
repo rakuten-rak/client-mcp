@@ -20,7 +20,7 @@ note:: if you some interactions on the terminal or cmd....
 This contains a first test for any one wanting to try hands of Gen AI on the command line or terminal.  beginner or intermediate or advanced wanting to test AI on the cmd or to teach fellows.
 
 ## Setups
-### To get started you must be a developer comfortable on the terminal or cmd.
+### To get started you must be a developer or person comfortable on the terminal or cmd.
 
 create your preferred AI api key first this was built using chatgpt openai key get here https://platform.openai.com
 
