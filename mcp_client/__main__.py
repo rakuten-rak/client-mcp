@@ -2,12 +2,15 @@ import asyncio
 from mcp_client.cli import parse_args
 from mcp_client.client import MCPClient
 
+# for testing if server is connected... when using stdio res..
+
 async def mains():
     
     async with MCPClient("./serverline/server.py") as client:
         print("Connected to the MCP Server")
         
        
+       # optional checks...
         tools = await MCPClient.client_session.list_tools()
         print(f"Available tools: {tools}")
         
