@@ -7,11 +7,11 @@ clone this repo https://github.com/rakuten-rak/client-mcp.git
 cd client-mcp
 
 ### To run this project
-uv run python -m mcp_client serverline/server.py --members
+***uv run python -m mcp_client serverline/server.py --members***
 
 note:: if you want to see all the list tool using here....
 
-uv run python -m mcp_client serverline/server.py --chat
+***uv run python -m mcp_client serverline/server.py --chat***
 
 note:: if you some interactions on the terminal or cmd....
 
